@@ -1,0 +1,96 @@
+{% load static %}
+<!-- base.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js"></script>
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="{% static 'css/estilos.css' %}">
+  
+    <title>My Reminder</title>
+</head>
+<body>
+    <nav>
+        <div class="topnav" id="myTopnav">
+            <a href="{% url 'base' %}" class="active">Home</a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'lista_tareas' %}">Mis Tareas</a>
+                <a href="{% url 'agregar' %}">Nueva Tarea</a>
+                <div class="logout-container">
+                    <a href="{% url 'logout' %}?next={% url 'base' %}">Cerrar Sesión</a>
+                </div>
+            {% else %}
+                <a href="{% url 'registro' %}">Registrate</a>
+                <div class="login-container">
+                    <form action="{% url 'login' %}" method="post">
+                        {% csrf_token %}
+                        <input type="text" placeholder="Username" name="username">
+                        <input type="password" placeholder="Password" name="password">
+                        <button type="submit">Login</button>
+                    </form>
+                </div>
+            {% endif %}
+        </div>
+    </nav>
+    <main style="display: flex; justify-content: center;">
+        {% block logo %}
+        <div class="logo-container">
+          <table class="table table-striped" style="width: 300px; height: auto">
+            <tr>
+              <th style="width:70%">My Reminder</th>
+              <th>Pros</th>
+            </tr>
+            <tr>
+              <td>Gestión eficiente de tareas</td>
+              <td><i class="fa fa-check"></i></td>
+            </tr>
+            <tr>
+              <td>Mayor productividad</td>
+              <td><i class="fa fa-check"></i></td>
+            </tr>
+            <tr>
+              <td>Recordatorios y notificaciones</td>
+              <td><i class="fa fa-check"></i></td>
+            </tr>
+            <tr>
+              <td>Colaboración en equipo</td>
+              <td><i class="fa fa-check"></i></td>
+            </tr>
+            <tr>
+              <td>Acceso desde cualquier lugar</td>
+              <td><i class="fa fa-check"></i></td>
+            </tr>
+            <tr>
+              <td>Seguimiento de progreso</td>
+              <td><i class="fa fa-check"></i></td>
+            </tr>
+          </table>
+          <img src="{% static 'img/logo.png' %}" alt="Nombre de la Página" class="center">
+        </div>
+        {% endblock %}
+        {% block content %}
+        <!-- Contenido específico de cada página se colocará aquí -->
+        {% endblock %}
+      </main>
+    <script>
+        function myFunction() {
+            var x = document.getElementById("myTopnav");
+            if (x.className === "topnav") {
+                x.className += " responsive";
+            } else {
+                x.className = "topnav";
+            }
+        }
+    </script>
+
+    <footer>
+        <p>&copy; 2023 Reminder. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,10 @@
+{% extends 'tareas/base.html' %}
+{% block logo %}{% endblock %}
+
+{% block content %}
+  <div class="welcome-container">
+    <h1>Bienvenido(a), {{ request.user.username|capfirst }}!</h1>
+    <p>Gracias por iniciar sesión.</p>
+    <p>¡Explora todas las funciones y disfruta de una experiencia optimizada para organizar tus tareas de manera efectiva!</p>
+  </div>
+{% endblock %}

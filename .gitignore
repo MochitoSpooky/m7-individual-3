@@ -1,0 +1,33 @@
+# Archivos generados por el sistema operativo
+.DS_Store
+Thumbs.db
+
+# Carpetas generadas por IDEs y editores de texto
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Dependencias y directorios de construcción
+/node_modules/
+/build/
+/dist/
+/.cache/
+
+# Entornos virtuales y registros de errores
+.myenv/
+venv/
+log/
+
+# Archivos de configuración sensibles
+.env
+.env.*
+.secret
+
+# Otros archivos y extensiones comunes a ignorar
+*.log
+*.swp
+*.bak
+*.tmp
+*.pid
+*.pyc
