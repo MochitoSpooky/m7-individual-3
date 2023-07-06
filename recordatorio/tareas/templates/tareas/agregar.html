@@ -6,13 +6,12 @@
 {% block content %}
 <script>
     $(function() {
-      $("#id_fecha_vencimiento").datepicker({dateFormat: 'dd-mm-yy'});
+      $("#id_fecha_vencimiento").datepicker({dateFormat: 'mm-dd-yy'});
     });
   </script>
 <div style="display: flex; justify-content: center;">
     <div style="border: 1px solid black; padding: 20px; width: 300px; height: auto; margin-right: 20px; margin-top: 20px; margin-left: 20px;">
         <h2>Perfil del Usuario</h2>
-        <p style="font-weight: bold;">Información del usuario:</p>
         <p><strong>Usuario:</strong> {{ request.user.username|capfirst }}</p>
         <p><strong>Nombre:</strong> {{ user.first_name |capfirst}} {{ user.last_name |capfirst}}</p>
         <p><strong>Email:</strong> {{ user.email }}</p>
@@ -49,7 +48,7 @@
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         $(".datepicker").datepicker({
-            dateFormat: 'dd/mm/yy',
+            dateFormat: 'mm/dd/yy',
             dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
             dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
             monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
