@@ -5,40 +5,14 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.views import LogoutView
 from django.contrib.auth.models import User
 from .forms import TareaForm
+from django.http import JsonResponse
 
-@login_required
-def lista_tareas(request):
-    usuario = request.user
-    tareas = Tarea.objects.filter(usuario=usuario)
-    lista_e = Etiqueta.objects.all()
-    print(tareas)
-    return render(request, 'tareas/lista_tareas.html', {'tareas': tareas,'etiquetas': lista_e})
-
-@login_required
-def detalle_tarea(request, tarea_id):
-    tarea = get_object_or_404(Tarea, id=tarea_id, usuario=request.user)
-
-    return render(request, 'tareas/detalle_tarea.html', {
-        'tarea': tarea,
-    })
-
-@login_required
-def completar_tarea(request, tarea_id):
-    tarea = get_object_or_404(Tarea, id=tarea_id, usuario=request.user)
-
-    # Actualizar el estado de la tarea a "Completada"
-    tarea.estado = 'completada'
-    tarea.save()
-
-    return redirect('lista_tareas')
-
-
-@login_required
-def bienvenida(request):
-    return render(request, 'tareas/bienvenida.html')
 
 def home(request):
     return render(request, 'tareas/base.html')
+@login_required
+def bienvenida(request):
+    return render(request, 'tareas/bienvenida.html')
 
 def login_view(request):
     if request.method == 'POST':
@@ -80,6 +54,31 @@ def eliminar_tarea(request, tarea_id):
         tarea.delete()
     return redirect('lista_tareas')
 
+@login_required
+def lista_tareas(request):
+    usuario = request.user
+    tareas = Tarea.objects.filter(usuario=usuario).order_by('fecha_vencimiento')
+    lista_e = Etiqueta.objects.all()
+
+    return render(request, 'tareas/lista_tareas.html', {'tareas': tareas,'etiquetas': lista_e})
+
+@login_required
+def detalle_tarea(request, tarea_id):
+    tarea = get_object_or_404(Tarea, id=tarea_id, usuario=request.user)
+
+    return render(request, 'tareas/detalle_tarea.html', {
+        'tarea': tarea,
+    })
+
+@login_required
+def completar_tarea(request, tarea_id):
+    tarea = get_object_or_404(Tarea, id=tarea_id, usuario=request.user)
+
+    # Actualizar el estado de la tarea a "Terminada"
+    tarea.estado = 'Terminada'
+    tarea.save()
+
+    return redirect('lista_tareas')
 
 
 class CustomLogoutView(LogoutView):
@@ -113,3 +112,27 @@ def registro(request):
     else:
         return render(request, 'tareas/registro.html')
 
+@login_required
+def detalles_tarea(request, tarea_id):
+    tarea = get_object_or_404(Tarea, id=tarea_id, usuario=request.user)
+    detalles = {
+        'titulo': tarea.titulo,
+        'descripcion': tarea.descripcion,
+        # Agrega los demás campos de la tarea aquí
+    }
+    return JsonResponse(detalles)
+
+def editar_tarea(request, tarea_id):
+    tarea = get_object_or_404(Tarea, id=tarea_id, usuario=request.user)
+
+    if request.method == 'POST':
+        # Procesar los datos del formulario de edición
+        tarea.titulo = request.POST['titulo']
+        tarea.descripcion = request.POST['descripcion']
+        # Actualiza los demás campos de la tarea
+
+        tarea.save()
+
+        return JsonResponse({'success': True})
+
+    return JsonResponse({'success': False})

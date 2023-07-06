@@ -54,9 +54,30 @@
       border-right: 1px solid #ddd;
     }
   }
+  
+  .task-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  
+  .task-container .btn {
+    margin-left: 10px;
+  }
 </style>
 <table id="myTable">
   <thead>
+    <tr>
+      <td>
+        <a href="{% url 'lista_tareas' %}" class="btn btn-secondary">Regresar a mis tareas</a>
+      </td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
     <tr class="header">
       <th style="width:10%;">Titulo</th>
       <th style="width:30%;">Descripción</th>
@@ -68,34 +89,43 @@
   </thead>
   <tbody>
     <tr>
-      <td>{{ tarea.titulo }}</td>
-      <td>{{ tarea.descripcion }}</td>
-      <td>{{ tarea.fecha_vencimiento }}</td>
-      <td>{{ tarea.estado }}</td>
-      <td>{{ tarea.etiqueta }}</td>
+      <td id="titulo">{{ tarea.titulo }}</td>
+      <td id="descripcion">{{ tarea.descripcion }}</td>
+      <td id="fecha_vencimiento">{{ tarea.fecha_vencimiento }}</td>
+      <td id="estado">{{ tarea.estado }}</td>
+      <td id="etiqueta">{{ tarea.etiqueta }}</td>
       <td>{{ tarea.usuario }}</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td>
+        <button type="button" class="btn btn-primary editar-btn" data-tarea-id="{{ tarea.id }}" data-toggle="modal" data-target="#editarModal">Editar</button>
+      </td>
+      <td>
+        <button type="button" class="btn btn-success" id="completarBtn">Terminar</button>
+      <form id="completarForm" method="POST" action="{% url 'completar_tarea' tarea.id %}" style="display: none;">
+          {% csrf_token %}
+          <input type="hidden" name="tarea_id" value="{{ tarea.id }}">
+        </form>
+      </td>
+      <td></td>
+      <td></td>
+      <td>
+        <form method="POST" action="{% url 'eliminar_tarea' tarea.id %}" class="delete-form" onsubmit="return confirm('¿Estás seguro de que deseas eliminar la tarea?');">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-danger">Eliminar</button>
+        </form>
+      </td>
     </tr>
   </tbody>
 </table>
-
 <script>
-function myFunction() {
-  var input, filter, table, tr, td, i, txtValue;
-  input = document.getElementById("myInput");
-  filter = input.value.toUpperCase();
-  table = document.getElementById("myTable");
-  tr = table.getElementsByTagName("tr");
-  for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("td")[0];
-    if (td) {
-      txtValue = td.textContent || td.innerText;
-      if (txtValue.toUpperCase().indexOf(filter) > -1) {
-        tr[i].style.display = "";
-      } else {
-        tr[i].style.display = "none";
-      }
-    }       
-  }
-}
+  document.getElementById('completarBtn').addEventListener('click', function() {
+    if (confirm('¿Estás seguro de que deseas marcar esta tarea como terminada?')) {
+      document.getElementById('completarForm').submit();
+    }
+  });
 </script>
+
+
 {% endblock %}

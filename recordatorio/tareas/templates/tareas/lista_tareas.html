@@ -75,22 +75,20 @@
 
       <div style="overflow-x: auto;">
         <div style="max-width: 120%;">
-          <table  id="myTable" style="width: 100%;">
+          <table id="myTable" style="width: 100%;">
             <thead>
               <tr class="header">
-                <th style="width: 15%;">Título</th>
-                <th style="width: 30%;">Descripción</th>
+                <th style="width: 20%;">Título</th>
                 <th style="width: 30%;">Fecha de Vencimiento</th>
-                <th style="width: 15%;">Estado</th>
+                <th style="width: 20%;">Estado</th>
                 <th style="width: 25%;">Etiqueta</th>
                 <th style="width: 25%;"></th>
               </tr>
             </thead>
             <tbody>
               {% for tarea in tareas %}
-                <tr>
+                <tr {% if tarea.estado == 'Terminada' %}style="background-color: #999; color: #333; text-decoration: line-through;"{% endif %}>
                   <td style="width: 20%;">{{ tarea.titulo }}</td>
-                  <td style="width: 40%;">{{ tarea.descripcion }}</td>
                   <td>{{ tarea.fecha_vencimiento }}</td>
                   <td>{{ tarea.estado }}</td>
                   <td>{{ tarea.etiqueta }}</td>
@@ -101,6 +99,7 @@
               {% endfor %}
             </tbody>
           </table>
+          
         </div>
       </div>
     </div>

@@ -200,3 +200,65 @@ th:first-child, td:first-child {
   color: #666;
   margin-bottom: 20px;
 }
+
+/*formato de detalles tarea*/
+* {
+  box-sizing: border-box;
+}
+
+#myTable {
+  border-collapse: collapse;
+  width: 60%;
+  margin: auto;
+  border: 1px solid #ddd;
+  font-size: 18px;
+}
+
+#myTable th, #myTable td {
+  text-align: left;
+  padding: 12px;
+}
+
+#myTable tr {
+  border-bottom: 1px solid #ddd;
+}
+
+#myTable tr.header, #myTable tr:hover {
+  background-color: #f1f1f1;
+}
+
+/* Media query para pantallas pequeñas */
+@media screen and (max-width: 600px) {
+  #myTable {
+    width: 100%;
+  }
+  
+  #myTable thead {
+    display: none;
+  }
+  
+  #myTable tbody tr {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  
+  #myTable tbody td {
+    width: calc(50% - 6px);
+  }
+  
+  #myTable tbody td:nth-child(odd) {
+    border-right: 1px solid #ddd;
+  }
+}
+
+.task-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.task-container .btn {
+  margin-left: 10px;
+}

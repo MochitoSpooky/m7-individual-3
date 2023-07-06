@@ -12,10 +12,9 @@ class Tarea(models.Model):
     ESTADO_CHOICES = [
         ('Pendiente', 'Pendiente'),
         ('En progreso', 'En progreso'),
-        ('Completada', 'Completada'),
+        ('Terminada', 'Terminada'),
     ]
-   
-
+    
     titulo = models.CharField(max_length=100)
     descripcion = models.TextField()
     fecha_vencimiento = models.DateField()
