@@ -10,9 +10,9 @@ class Etiqueta(models.Model):
 
 class Tarea(models.Model):
     ESTADO_CHOICES = [
-        ('pendiente', 'Pendiente'),
-        ('en_progreso', 'En progreso'),
-        ('completada', 'Completada'),
+        ('Pendiente', 'Pendiente'),
+        ('En progreso', 'En progreso'),
+        ('Completada', 'Completada'),
     ]
    
 

@@ -20,6 +20,7 @@ from django.contrib.auth import views as auth_views
 from tareas.views import bienvenida, CustomLogoutView
 from tareas import views
 from tareas.views import login_view
+from tareas.views import detalle_tarea
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -32,6 +33,7 @@ urlpatterns = [
     path('accounts/logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('registro/', views.registro, name='registro'),
     path("agregar/", views.agregar_tarea, name='agregar'),
-    path('detalle_tarea/<int:tarea_id>/', views.detalle_tarea, name='detalle_tarea'),
+    path('tarea/<int:tarea_id>/detalle/', detalle_tarea, name='detalle_tarea'),
     path('tarea/<int:tarea_id>/eliminar/', views.eliminar_tarea, name='eliminar_tarea'),
+    path('tarea/<int:tarea_id>/completar/', views.completar_tarea, name='completar_tarea'),
 ]

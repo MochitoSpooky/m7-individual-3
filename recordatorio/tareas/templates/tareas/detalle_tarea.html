@@ -1,16 +1,101 @@
-<!-- {% extends 'tareas/base.html' %}
-{% block logo %}{% endblock %}
+{% extends 'tareas/base.html' %}
+
+{% block logo %}
+{% endblock %}
 
 {% block content %}
-  <h1>{{ tarea.titulo }}</h1>
+<style>
+  * {
+    box-sizing: border-box;
+  }
+  
+  #myTable {
+    border-collapse: collapse;
+    width: 60%;
+    margin: auto;
+    border: 1px solid #ddd;
+    font-size: 18px;
+  }
+  
+  #myTable th, #myTable td {
+    text-align: left;
+    padding: 12px;
+  }
+  
+  #myTable tr {
+    border-bottom: 1px solid #ddd;
+  }
+  
+  #myTable tr.header, #myTable tr:hover {
+    background-color: #f1f1f1;
+  }
+  
+  /* Media query para pantallas pequeñas */
+  @media screen and (max-width: 600px) {
+    #myTable {
+      width: 100%;
+    }
+    
+    #myTable thead {
+      display: none;
+    }
+    
+    #myTable tbody tr {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+    
+    #myTable tbody td {
+      width: calc(50% - 6px);
+    }
+    
+    #myTable tbody td:nth-child(odd) {
+      border-right: 1px solid #ddd;
+    }
+  }
+</style>
+<table id="myTable">
+  <thead>
+    <tr class="header">
+      <th style="width:10%;">Titulo</th>
+      <th style="width:30%;">Descripción</th>
+      <th style="width:15%;">Fecha de Vencimiento</th>
+      <th style="width:15%;">Estado</th>
+      <th style="width:15%;">Etiqueta</th>
+      <th style="width:15%;">Usuario</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>{{ tarea.titulo }}</td>
+      <td>{{ tarea.descripcion }}</td>
+      <td>{{ tarea.fecha_vencimiento }}</td>
+      <td>{{ tarea.estado }}</td>
+      <td>{{ tarea.etiqueta }}</td>
+      <td>{{ tarea.usuario }}</td>
+    </tr>
+  </tbody>
+</table>
 
-  <p>{{ tarea.descripcion }}</p>
-
-  <p>Fecha de Vencimiento: {{ tarea.fecha_vencimiento }}</p>
-
-  <p>Estado: {{ tarea.estado }}</p>
-
-  <p>Etiqueta: {{ tarea.etiqueta }}</p>
-
-  <a href="{% url 'completar_tarea' tarea.id %}">Marcar como Completada</a>
-{% endblock %} -->
+<script>
+function myFunction() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }       
+  }
+}
+</script>
+{% endblock %}

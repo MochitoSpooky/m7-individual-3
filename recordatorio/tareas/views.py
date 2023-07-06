@@ -18,9 +18,19 @@ def lista_tareas(request):
 def detalle_tarea(request, tarea_id):
     tarea = get_object_or_404(Tarea, id=tarea_id, usuario=request.user)
 
-    return render(request, 'tareas/lista_tareas.html', {
+    return render(request, 'tareas/detalle_tarea.html', {
         'tarea': tarea,
     })
+
+@login_required
+def completar_tarea(request, tarea_id):
+    tarea = get_object_or_404(Tarea, id=tarea_id, usuario=request.user)
+
+    # Actualizar el estado de la tarea a "Completada"
+    tarea.estado = 'completada'
+    tarea.save()
+
+    return redirect('lista_tareas')
 
 
 @login_required
